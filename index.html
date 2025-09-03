@@ -3,128 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ugbos Venture - Quality Soft Drinks</title>
+    <title>Ugbos Venture - Refreshing Soft Drinks</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <a href="#home">
-                        <img src="image/Ugbos 2.png" alt="Ugbos Venture" class="logo-image">
-                    </a>
-                </div>
-                <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-glass-cheers"></i>
+                    Ugbos Venture
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
                     <ul>
-                        <li><a href="#home">Home</a></li>
                         <li><a href="#products">Products</a></li>
-                        <li><a href="#cart">Cart <span id="cart-count">0</span></a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" id="showSignupForm">Sign Up</a></li>
+                        <li><a href="#" id="showCheckoutForm"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Quality Soft Drinks for Every Occasion</h1>
-                <p>Ugbos Venture is your trusted supplier of premium soft drinks. We offer a wide range of beverages to quench your thirst and satisfy your taste buds.</p>
-                <a href="#products" class="btn">Explore Products</a>
-            </div>
-        </div>
-    </section>
+    <main class="container">
+        <section class="hero">
+            <h1>Refresh Your Moments</h1>
+            <p>Discover our premium selection of soft drinks crafted for every occasion</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </section>
 
-    <!-- Products Section -->
-    <section id="products" class="products">
-        <div class="container">
-            <h2>Our Products</h2>
-            
-            <!-- Product Filters -->
-            <div class="product-filters">
-                <div class="search-box">
-                    <input type="text" id="product-search" placeholder="Search products...">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="soda">Soda</button>
-                    <button class="filter-btn" data-filter="juice">Juice</button>
-                    <button class="filter-btn" data-filter="energy">Energy Drinks</button>
-                </div>
+        <!-- Search Bar Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for your favorite drink...">
+                <button id="clearSearch" class="clear-search-btn">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            
-            <div class="product-grid" id="product-grid">
+            <div id="searchResults" class="search-results"></div>
+        </section>
+
+        <section id="products" class="products-section">
+            <h2 class="section-title">Our Products</h2>
+            <div class="products-grid" id="productsGrid">
                 <!-- Products will be loaded dynamically -->
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Cart Section -->
-    <section id="cart" class="cart">
-        <div class="container">
-            <h2>Your Cart</h2>
-            <div class="cart-content">
-                <div class="cart-items" id="cart-items">
-                    <p class="empty-cart">Your cart is empty</p>
+        <section id="about" class="about-section">
+            <h2 class="section-title">About Ugbos Venture</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Ugbos Venture has been providing quality soft drinks since 2010. Our commitment to excellence and customer satisfaction has made us a trusted name in the beverage industry.</p>
+                    <p>We source only the finest ingredients and use state-of-the-art production methods to ensure every drink delivers exceptional taste and quality.</p>
                 </div>
-                <div class="cart-summary">
-                    <h3>Order Summary</h3>
-                    <div class="summary-details">
-                        <p>Total: ₦<span id="cart-total">0.00</span></p>
-                    </div>
-                    <button class="btn checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="About Ugbos Venture">
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Checkout</h2>
-            <div class="payment-info">
-                <p>Please make payment to the account below:</p>
-                <div class="account-details">
-                    <h3>Opay: 7042104027</h3>
-                    <p>Account Name: Ugbos Venture</p>
-                </div>
-                <p>After payment, confirm by:</p>
-                <div class="confirmation-options">
-                    <div class="option">
-                        <h3>Send via WhatsApp</h3>
-                        <a href="#" class="btn whatsapp-btn" id="whatsapp-btn">
-                            <i class="fab fa-whatsapp"></i> Send Order Details
-                        </a>
+        <!-- Checkout Form -->
+        <section id="checkout" class="form-section hidden">
+            <h2 class="form-title">Checkout</h2>
+            <div class="checkout-content">
+                <div class="order-summary">
+                    <h3>Your Order</h3>
+                    <div id="orderItems">
+                        <!-- Order items will be added here -->
                     </div>
-                    <div class="option">
-                        <h3>Email Your Receipt</h3>
-                        <p>Send your payment receipt to:</p>
-                        <p class="email-address">momodurakinoshioke@gmail.com</p>
-                        <button class="btn" id="copy-order-details">
-                            <i class="fas fa-copy"></i> Copy Order Details
-                        </button>
+                    <div class="order-total">
+                        <p>Total: <span id="orderTotal">₦0.00</span></p>
                     </div>
                 </div>
-                <div class="order-summary" id="email-order-summary">
-                    <!-- Order details will be inserted here -->
-                </div>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
-                    <strong>Note:</strong> After payment, email your receipt to the address above with your order details.
-                </p>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <textarea id="address" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    <div class="payment-info">
+                        <p>Please transfer payment to:</p>
+                        <div class="account-info">
+                            <p><strong>Account Name:</strong> Ugbos Venture</p>
+                            <p><strong>Account Number:</strong> 7042104027</p>
+                            <p><strong>Bank:</strong> Opay</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Complete Order via WhatsApp</button>
+                    <button type="button" id="copyOrder" class="btn copy-btn">Copy Order Details</button>
+                    <div class="form-group">
+                    <!-- <label for="whatsappNumber">Customer Service WhatsApp Number</label>
+                    <input type="text" id="whatsappNumber" class="form-control" value="2347042104027" required> -->
+                    <!-- </div> -->
+                </form>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Footer -->
+        <!-- Sign Up Form -->
+        <section id="signup" class="form-section hidden">
+            <h2 class="form-title">Create an Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Indonijie-street,Auchi,Edo-state</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+234 704 210 4027</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>rakinmomoduoshioke@gmai.com</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
         <div class="container">
-            <p>&copy; 2025 Ugbos Venture – Quality Soft Drinks.</p>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Ugbos Venture</h3>
+                    <p>Providing quality soft drinks for over a decade. Refresh your moments with our delicious beverages.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" id="footerSignup">Sign Up</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Ugbos Venture. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
