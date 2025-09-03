@@ -6,7 +6,8 @@ const products = [
         description: "Refreshing carbonated soft drink",
         price: 150,
         stock: 20,
-        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        category: "soda"
     },
     {
         id: 2,
@@ -14,7 +15,8 @@ const products = [
         description: "Delicious cola with a refreshing taste",
         price: 140,
         stock: 15,
-        image: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        image: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        category: "soda"
     },
     {
         id: 3,
@@ -22,7 +24,8 @@ const products = [
         description: "Sparkling orange flavored drink",
         price: 130,
         stock: 18,
-        image: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        image: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        category: "soda"
     },
     {
         id: 4,
@@ -30,7 +33,8 @@ const products = [
         description: "Crisp, lemon-lime flavored soda",
         price: 130,
         stock: 12,
-        image: "https://images.unsplash.com/photo-1640145827375-58e21b5c5145?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        image: "https://images.unsplash.com/photo-1640145827375-58e21b5c5145?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        category: "soda"
     }
 ];
 
@@ -46,9 +50,7 @@ const checkoutBtn = document.getElementById('checkout-btn');
 const modal = document.getElementById('checkout-modal');
 const closeModal = document.querySelector('.close');
 const whatsappBtn = document.getElementById('whatsapp-btn');
-const uploadBtn = document.getElementById('upload-btn');
-const emailBtn = document.getElementById('email-btn');
-const receiptUpload = document.getElementById('receipt-upload');
+const copyOrderBtn = document.getElementById('copy-order-details');
 
 // Display products with inventory
 function displayProducts() {
@@ -57,6 +59,7 @@ function displayProducts() {
     products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
+        productCard.dataset.category = product.category;
         
         // Determine stock status
         let stockClass = '';
@@ -312,6 +315,9 @@ function updateCart() {
     
     // Update WhatsApp link with order details
     updateWhatsAppLink();
+    
+    // Update order summary in modal
+    updateOrderSummary();
 }
 
 // Update WhatsApp link with order details
@@ -329,6 +335,24 @@ function updateWhatsAppLink() {
     message += "Please confirm availability and provide payment details.";
     
     whatsappBtn.href = `https://wa.me/2347042104027?text=${message}`;
+}
+
+// Update order summary in modal
+function updateOrderSummary() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    let orderSummary = "<h4>Your Order Details:</h4><ul>";
+    
+    cart.forEach(item => {
+        orderSummary += `<li>${item.name} x ${item.quantity} - ₦${(item.price * item.quantity).toFixed(2)}</li>`;
+    });
+    
+    orderSummary += `</ul><p><strong>Total: ₦${total.toFixed(2)}</strong></p>`;
+    orderSummary += "<p>Please include this information when emailing your receipt.</p>";
+    
+    const orderSummaryElement = document.getElementById('email-order-summary');
+    if (orderSummaryElement) {
+        orderSummaryElement.innerHTML = orderSummary;
+    }
 }
 
 // Handle cart image loading errors
@@ -372,47 +396,78 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Email button functionality
-emailBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    
-    // Create order summary message
+// Copy order details to clipboard
+copyOrderBtn.addEventListener('click', () => {
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    let orderMessage = "ORDER DETAILS:%0D%0A%0D%0A";
+    let orderDetails = "Order Details:\n\n";
     
     cart.forEach(item => {
-        orderMessage += `- ${item.name} x ${item.quantity} = ₦${(item.price * item.quantity).toFixed(2)}%0D%0A`;
+        orderDetails += `${item.name} x ${item.quantity} - ₦${(item.price * item.quantity).toFixed(2)}\n`;
     });
     
-    orderMessage += `%0D%0ATOTAL AMOUNT: ₦${total.toFixed(2)}%0D%0A%0D%0A`;
-    orderMessage += "PAYMENT RECEIPT ATTACHED%0D%0A%0D%0A";
-    orderMessage += "Customer Information:%0D%0A";
-    orderMessage += "Name: [Your Name]%0D%0A";
-    orderMessage += "Phone: [Your Phone Number]%0D%0A";
-    orderMessage += "Address: [Your Address]%0D%0A%0D%0A";
-    orderMessage += "Please process my order upon verification. Thank you!";
+    orderDetails += `\nTotal: ₦${total.toFixed(2)}\n\n`;
+    orderDetails += "Please process my order upon verification. Thank you!";
     
-    // Open email client with your email address pre-filled
-    const emailSubject = "Payment Receipt for Order from Ugbos Venture";
-    window.location.href = `mailto:momodurakinoshioke@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${orderMessage}`;
-    
-    showNotification('Email client opened. Please attach your receipt and fill in your details.');
+    // Copy to clipboard
+    navigator.clipboard.writeText(orderDetails).then(() => {
+        showNotification('Order details copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+        showNotification('Failed to copy details. Please manually type your order.');
+    });
 });
 
-// Upload button
-uploadBtn.addEventListener('click', () => {
-    if (!receiptUpload.files.length) {
-        showNotification('Please select a receipt file');
-        return;
-    }
+// Product filtering and search
+function initProductFilters() {
+    const searchInput = document.getElementById('product-search');
+    const filterButtons = document.querySelectorAll('.filter-btn');
     
-    showNotification('Please use the Email option to send receipts with order details');
-});
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        filterProducts(searchTerm);
+    });
+    
+    // Filter buttons
+    filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            e.target.classList.add('active');
+            
+            // Filter products
+            const filter = e.target.dataset.filter;
+            filterProducts('', filter);
+        });
+    });
+}
+
+function filterProducts(searchTerm = '', filter = 'all') {
+    const productCards = document.querySelectorAll('.product-card');
+    
+    productCards.forEach(card => {
+        const productName = card.querySelector('h3').textContent.toLowerCase();
+        const productDesc = card.querySelector('p').textContent.toLowerCase();
+        const productCategory = card.dataset.category || 'soda';
+        
+        const matchesSearch = productName.includes(searchTerm) || productDesc.includes(searchTerm);
+        const matchesFilter = filter === 'all' || productCategory === filter;
+        
+        if (matchesSearch && matchesFilter) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 
 // Initialize the page
 function init() {
     displayProducts();
     updateCart();
+    initProductFilters();
     
     // Checkout button event
     checkoutBtn.addEventListener('click', () => {

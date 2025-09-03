@@ -13,10 +13,9 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-placeholder">
-                        <i class="fas fa-wine-bottle"></i>
-                    </div>
-                    <span class="logo-text">Ugbos Venture</span>
+                    <a href="#home">
+                        <img src="images/ugbos-logo.png" alt="Ugbos Venture" class="logo-image">
+                    </a>
                 </div>
                 <nav>
                     <ul>
@@ -44,6 +43,21 @@
     <section id="products" class="products">
         <div class="container">
             <h2>Our Products</h2>
+            
+            <!-- Product Filters -->
+            <div class="product-filters">
+                <div class="search-box">
+                    <input type="text" id="product-search" placeholder="Search products...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="soda">Soda</button>
+                    <button class="filter-btn" data-filter="juice">Juice</button>
+                    <button class="filter-btn" data-filter="energy">Energy Drinks</button>
+                </div>
+            </div>
+            
             <div class="product-grid" id="product-grid">
                 <!-- Products will be loaded dynamically -->
             </div>
@@ -83,32 +97,30 @@
                 <p>After payment, confirm by:</p>
                 <div class="confirmation-options">
                     <div class="option">
-                        <h3>Upload Receipt</h3>
-                        <input type="file" id="receipt-upload">
-                        <button class="btn" id="upload-btn">Upload</button>
-                    </div>
-                    <div class="option">
                         <h3>Send via WhatsApp</h3>
                         <a href="#" class="btn whatsapp-btn" id="whatsapp-btn">
-                            <i class="fab fa-whatsapp"></i> Send Receipt
+                            <i class="fab fa-whatsapp"></i> Send Order Details
                         </a>
                     </div>
                     <div class="option">
-                        <h3>Send via Email</h3>
-                        <a href="#" class="btn email-btn" id="email-btn">
-                            <i class="fas fa-envelope"></i> Email Receipt
-                        </a>
+                        <h3>Email Your Receipt</h3>
+                        <p>Send your payment receipt to:</p>
+                        <p class="email-address">momodurakinoshioke@gmail.com</p>
+                        <button class="btn" id="copy-order-details">
+                            <i class="fas fa-copy"></i> Copy Order Details
+                        </button>
                     </div>
                 </div>
-        <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
-            <strong>Note:</strong> For payment verification, please email your receipt to:<br>
-            <strong>momodurakinoshioke@gmail.com</strong>
-        </p>    
+                <div class="order-summary" id="email-order-summary">
+                    <!-- Order details will be inserted here -->
                 </div>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
+                    <strong>Note:</strong> After payment, email your receipt to the address above with your order details.
+                </p>
             </div>
         </div>
     </div>
-    
+
     <!-- Footer -->
     <footer>
         <div class="container">
